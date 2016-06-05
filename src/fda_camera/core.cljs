@@ -18,29 +18,25 @@
 
 (defn <top-cpnt> []
   (let [state @app-state]
-    [:div.container-fluid
+    [:div.container.container-fluid
      [:div.row.show-grid
       [:div.col-md-12 [<header-panel>]]]
      [:div.row.show-grid
-      [:div.col-md-4 [<control-panel>]]
-      [:div.col-md-4 [<camera-panel>]]
-      [:div.col-md-4 [<output-panel>]]]]))
+      [:div.col-md-3 [<control-panel>]]
+      [:div.col-md-9 [<camera-panel>]]
+      ]]))
 
 (defn <header-panel> []
-  [:div "header panel"]
+  [:div.cpnt-panel.header "header panel"]
   )
 
 (defn <control-panel> []
-  [:div "control panel"]
+  [:div.cpnt-panel.control "control panel"]
   )
 
 (defn <camera-panel> []
- [:div "camera panel"]
+ [:div.cpnt-panel.camera "camera panel"]
  )
-
-(defn <output-panel> []
-  [:div "output panel"]
-  )
 
 ;; Mount Components
 
