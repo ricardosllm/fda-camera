@@ -1,5 +1,6 @@
 (ns fda-camera.core
-  (:require [reagent.core :as reagent :refer [atom]]))
+  (:require [reagent.core :as reagent :refer [atom]]
+            [fda-camera.camera :as camera]))
 
 (enable-console-print!)
 
@@ -35,7 +36,7 @@
   )
 
 (defn <camera-panel> []
- [:div.cpnt-panel.camera "camera panel"]
+  [:div.cpnt-panel.camera (camera/webcam)]
  )
 
 ;; Mount Components
