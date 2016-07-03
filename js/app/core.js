@@ -13,7 +13,7 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
   }
 
   var createImgFileName = function(cameraId){
-    var d1=new Date();
+    var d1 = new Date();
 
     var curr_year = d1.getFullYear();
 
@@ -37,13 +37,17 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
     if (curr_sec < 10)
       curr_sec = "0" + curr_sec;
 
-    //var newtimestamp = curr_year + "-" + curr_month + "-" + curr_date + " " + curr_hour + ":" + curr_min + ":" + curr_sec;
-
-    var newtimestamp = curr_sec + "-" + curr_min + "-" + curr_hour + "-" + curr_date + "-" + curr_month + "-" + curr_year + "-" + cameraId + ".png";
+    var newtimestamp =
+          curr_sec   + "-" +
+          curr_min   + "-" +
+          curr_hour  + "-" +
+          curr_date  + "-" +
+          curr_month + "-" +
+          curr_year  + "-" +
+          cameraId   + ".png";
 
     return newtimestamp;
-
-  }
+  };
 
   var dataURItoBlob = function (dataURI) {
     var binary = atob(dataURI.split(',')[1]);
@@ -52,19 +56,18 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], {type: 'image/png'});
-  }
+  };
 
   var getCameraId = function (){
     //console.log(queryStrings);
     //console.log(getParameterByName("cameraId"));
-    var cameraId =   getParameterByName("cameraid")!="" ? getParameterByName("cameraid") : c.defaultCameraId;
+    var cameraId = getParameterByName("cameraid")!="" ? getParameterByName("cameraid") : c.defaultCameraId;
     return cameraId;
-
-  }
+  };
 
   var isRecording = function(){
     return !($( "#btnSnap" ).hasClass("active"));
-  }
+  };
 
   var startCountDown = function (){
     $("#lblCounter").text(Math.floor(c.durationBtwSnap/1000));
@@ -73,13 +76,13 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
       initTimerCountDown();
     else
       timerCountDown.restart();
-  }
+  };
 
   var stopCountDown = function (){
     $("#lblCounter").text("");
     if(timerCountDown)
       timerCountDown.pause();
-  }
+  };
 
   function initTimerCountDown(){
     timerCountDown = TimersJS.timer(1000, function() {
@@ -93,12 +96,12 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
       initTimerSnap();
     else
       timerSnap.restart();
-  }
+  };
 
   var stopSnap = function (){
     if(timerSnap)
       timerSnap.pause();
-  }
+  };
 
   function initTimerSnap(){
     $("#lblCounter").text(Math.floor(c.durationBtwSnap/1000));
@@ -109,64 +112,58 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
       uploadImgToS3();
       this.restart();
       startCountDown();;
-
     });
   }
-
-
 
   var uploadImgToS3 = function (){
     $('#divFlash').show().animate({opacity: 0.5}, 300).fadeOut(300).css({'opacity': 1});
 
-
-    var region = c.AWS.region; //'ap-northeast-1'
-    var sqsQueryUrl = c.AWS.sqsQueryUrl; //'https://sqs.ap-northeast-1.amazonaws.com/838308054432/wordcloudqueue'
-    var cameraId = getCameraId();
+    var sqsQueryUrl     = c.AWS.sqsQueryUrl;
+    var cameraId        = getCameraId();
     var durationBtwSnap = c.durationBtwSnap;
-    var identityPoolId = c.AWS.identityPoolId;
-    AWS.config.region = region;
 
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: identityPoolId
-    });
+    AWS.config.region   = c.AWS.region;
+    AWS.config.credentials =
+      new AWS.CognitoIdentityCredentials({ IdentityPoolId: c.AWS.identityPoolId });
 
     var fileName = createImgFileName(cameraId);
-    var folder = "input";
+    var folder   = "input";
 
     console.log(fileName);
     console.log("btnSnap_Click");
-    var canvas = document.getElementById("canvas"),
-        context = canvas.getContext("2d"),
-        video = document.getElementById("video"),
+    var canvas   = document.getElementById("canvas"),
+        context  = canvas.getContext("2d"),
+        video    = document.getElementById("video"),
         videoObj = { "video": true },
-        errBack = function(error) {
+        errBack  = function(error) {
           console.log("Video capture error: ", error.code); 
         };
+
     context.drawImage(video, 0, 0, 640, 480);
 
     var dataURL = canvas.toDataURL();
     //dataURL = dataURL.replace(/^data:image\/png;base64,/, '');
-    var blob = dataURItoBlob(dataURL)
+    var blob = dataURItoBlob(dataURL);
 
-    console.log("uploadfile:" + fileName);
+    console.log("uploadfile: " + fileName);
     // console.log(dataURL);
     var metaData = { cameraId:cameraId};
 
     var params = {
-      Key: folder+"/" +fileName,
-      Body: blob,
-      ACL:'public-read',
-      ContentType:"image/png",
-      Metadata: { cameraId:cameraId}
+      Key:         folder + "/" + fileName,
+      Body:        blob,
+      ACL:         "public-read",
+      ContentType: "image/png",
+      Metadata:    { cameraId:cameraId}
     };
 
     var bucket = new AWS.S3({params: {Bucket: c.AWS.s3Bucket}, signatureVersion: 'v4'});
     console.log(params);
     console.log(fileName);
-    console.log(c.AWS.s3RawBucket);
     // console.log(dataURL);
 
     bucket.upload(params, function (err, data) {
+      debugger;
       console.log(err ? 'ERROR!' : 'SAVED.');
       console.log(err);
       if(!err)
