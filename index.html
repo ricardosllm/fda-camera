@@ -30,7 +30,7 @@
     body {
       padding-bottom: 40px;
       color: #5a5a5a;
-      background-color: #000000;
+      background-color: #393f4c; /* #000000 */
 
     }
     html { 
@@ -243,11 +243,10 @@
       <div class="headerpanel" style="min-height:90px;width: 100%;">
         <table width="100%">
           <tr>
-            <td width=20%><img src="images/big_pbaws_logo_300px.jpg" style="width:auto;height:50px;margin-top:10px; "/></td>
-            <td width=60%>
-              <h1>Camera app</h1>
-              HTML5 + AWS Javascript SDK
-              
+            <td>
+                <div class="cameralbl" id="lblCamName"></div>
+                <h1>Camera app</h1>
+          <button id="btnSnap" class="btn btn-success btn-lg " label-active="Stop recording" label-inactive="Start recording">Start Recording</button>
             </td>
             <td>
                 <button id="btnStream" class="btn btn-danger btn-lg " label-active="Stop streaming" label-inactive="Start streaming" style="display:none;">Start Streaming</button>
@@ -261,10 +260,7 @@
       <div class="cameraframe panel" style="width:20%;">
           
 
-          <img src="images/Deck_SecurityCamera.png" class="cameraicon" width="80px" height="80px"/>
-          <div class="cameralbl">Camera</div>
-          <div class="cameralbl" id="lblCamId"></div>
-          <button id="btnSnap" class="btn btn-success btn-lg " label-active="Stop recording" label-inactive="Start recording">Start Recording</button>
+          <!-- <button id="btnSnap" class="btn btn-success btn-lg " label-active="Stop recording" label-inactive="Start recording">Start Recording</button> -->
           <div style="margin-top:50px;display:none;">
             <img src="images/Cognito.svg" width="50px" height="50px"/>
 
@@ -292,7 +288,7 @@
         <div id="imgCounter" >0</div>
 
         <div style=" background: transparent;position: relative; z-index: 100; top:-30px;">
-          <img src="images/S3-Bucket.svg" width="230px" height="230px"/>
+            <!-- <img src="images/S3-Bucket.svg" width="230px" height="230px"/> -->
         </div>
         <div id="imgContainer" ></div>
 

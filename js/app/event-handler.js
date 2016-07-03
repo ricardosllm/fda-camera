@@ -9,7 +9,7 @@ define(["jquery","aws", "app/config","app/core"],function($,a,c,core){
         video = document.getElementById("video"),
         videoObj = { "video": true },
         errBack = function(error) {
-          console.log("Video capture error: ", error.code); 
+          console.log("Video capture error: ", error.code);
         };
 
       // Put video listeners into place
@@ -31,25 +31,18 @@ define(["jquery","aws", "app/config","app/core"],function($,a,c,core){
       }
       console.log(core.getCameraId());
 
-      $("#lblCamId").text("Id : " + core.getCameraId());  
-
+      $("#lblCamId").text("Id : " + core.getCameraId());
+      $("#lblCamName").text(core.getCameraName());
 
       console.log("c.durationBtwSnap:" + c.durationBtwSnap);
-
-
-      
-
-	}  
-
-	
-
+  };
 
 	var btnSnap_Click = function(){
 
 		$( "#btnSnap" ).toggleClass( "active" );
     $( "#btnSnap" ).toggleClass("btn-success");
-    $( "#btnSnap" ).toggleClass("btn-danger");  
-		$( "#btnSnap" ).text( $( "#btnSnap" ).hasClass("active")? $( "#btnSnap" ).attr("label-active"):$( "#btnSnap" ).attr("label-inactive") );
+    $( "#btnSnap" ).toggleClass("btn-danger");
+    $( "#btnSnap" ).text( $( "#btnSnap" ).hasClass("active")? $( "#btnSnap" ).attr("label-active"):$( "#btnSnap" ).attr("label-inactive") );
 		//$("#video").fadeOut("fast").delay(25).fadeIn("fast");
 		/*$('#divFlash').show().animate({opacity: 0.5}, 300).fadeOut(300).css({'opacity': 1});*/
     var isActive = !$( "#btnSnap" ).hasClass("active");
@@ -62,14 +55,8 @@ define(["jquery","aws", "app/config","app/core"],function($,a,c,core){
       core.stopSnap();
       core.stopCountDown();
     }
-      
-
-	}	
-
-    $("#btnSnap").bind("click",btnSnap_Click); 
+  };
+    $("#btnSnap").bind("click",btnSnap_Click);
 
     $(document).ready(documentReady);
-
- 
-    
 });

@@ -58,11 +58,15 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
     return new Blob([new Uint8Array(array)], {type: 'image/png'});
   };
 
-  var getCameraId = function (){
+  var getCameraId = function(){
     //console.log(queryStrings);
     //console.log(getParameterByName("cameraId"));
     var cameraId = getParameterByName("cameraid")!="" ? getParameterByName("cameraid") : c.defaultCameraId;
     return cameraId;
+  };
+
+  var getCameraName = function() {
+    return c.defaultCameraName;
   };
 
   var isRecording = function(){
@@ -163,7 +167,6 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
     // console.log(dataURL);
 
     bucket.upload(params, function (err, data) {
-      debugger;
       console.log(err ? 'ERROR!' : 'SAVED.');
       console.log(err);
       if(!err)
@@ -180,17 +183,17 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
         $("#imgCounter").text(parseInt($("#imgCounter").text())+1);
       }
     });
-  }
+  };
 
   var core = {
-    createImgFileName : createImgFileName,
-    dataURItoBlob : dataURItoBlob,
-    uploadImgToS3 : uploadImgToS3,
-    getCameraId : getCameraId,
-    startSnap : startSnap,
-    stopSnap : stopSnap,
-    startCountDown : startCountDown,
-    stopCountDown : stopCountDown
+    createImgFileName: createImgFileName,
+    dataURItoBlob:     dataURItoBlob,
+    uploadImgToS3:     uploadImgToS3,
+    getCameraId:       getCameraId,
+    startSnap:         startSnap,
+    stopSnap:          stopSnap,
+    startCountDown:    startCountDown,
+    stopCountDown:     stopCountDown
   };
 
   return core;

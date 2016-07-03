@@ -12,7 +12,7 @@ requirejs.config({
         "bootstrap" :  "//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min"  ,
         "aws" :  "//sdk.amazonaws.com/js/aws-sdk-2.3.19.min"  ,
         "countdown" :  "lib/jquery.countdown.min"  ,
-        "timersjs" :  "lib/timers"  ,
+        "timersjs" :  "lib/timers"
     }
 });
 
