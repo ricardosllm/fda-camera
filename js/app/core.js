@@ -111,7 +111,6 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
     $("#lblCounter").text(Math.floor(c.durationBtwSnap/1000));
 
     timerSnap = TimersJS.timer(c.durationBtwSnap, function() {
-      //readMessageFromAWS
       stopCountDown();
       uploadImgToS3();
       this.restart();
@@ -146,11 +145,9 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
     context.drawImage(video, 0, 0, 640, 480);
 
     var dataURL = canvas.toDataURL();
-    //dataURL = dataURL.replace(/^data:image\/png;base64,/, '');
     var blob = dataURItoBlob(dataURL);
 
     console.log("uploadfile: " + fileName);
-    // console.log(dataURL);
     var metaData = { cameraId:cameraId};
 
     var params = {
@@ -164,7 +161,6 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
     var bucket = new AWS.S3({params: {Bucket: c.AWS.s3Bucket}, signatureVersion: 'v4'});
     console.log(params);
     console.log(fileName);
-    // console.log(dataURL);
 
     bucket.upload(params, function (err, data) {
       console.log(err ? 'ERROR!' : 'SAVED.');
@@ -173,7 +169,6 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
       {
         var linksContainer = $('#imgContainer');
         var imgUrl = data.Location;
-        // console.log(data);
         imgList.push({cameraId:cameraId, url:data.Location});
         console.log(imgList);
         if($('.imgSnap') && $('.imgSnap').size() >= 3)
