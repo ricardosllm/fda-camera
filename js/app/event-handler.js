@@ -42,9 +42,11 @@ define(["jquery","aws", "app/config","app/core"],function($,a,c,core){
 		$( "#btnSnap" ).toggleClass( "active" );
     $( "#btnSnap" ).toggleClass("btn-success");
     $( "#btnSnap" ).toggleClass("btn-danger");
-    $( "#btnSnap" ).text( $( "#btnSnap" ).hasClass("active")? $( "#btnSnap" ).attr("label-active"):$( "#btnSnap" ).attr("label-inactive") );
-		//$("#video").fadeOut("fast").delay(25).fadeIn("fast");
-		/*$('#divFlash').show().animate({opacity: 0.5}, 300).fadeOut(300).css({'opacity': 1});*/
+    $( "#btnSnap" ).text( $( "#btnSnap" )
+                          .hasClass("active")? $( "#btnSnap" )
+                          .attr("label-active"):$( "#btnSnap" )
+                          .attr("label-inactive") );
+
     var isActive = !$( "#btnSnap" ).hasClass("active");
     if(!isActive)
     {

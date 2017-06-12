@@ -59,8 +59,6 @@ define(["jquery","aws", "app/config", "timersjs"],function($,a,c){
   };
 
   var getCameraId = function(){
-    //console.log(queryStrings);
-    //console.log(getParameterByName("cameraId"));
     var cameraId = getParameterByName("cameraid")!="" ? getParameterByName("cameraid") : c.defaultCameraId;
     return cameraId;
   };
